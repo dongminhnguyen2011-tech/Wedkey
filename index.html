@@ -3,178 +3,155 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title>One Piece 3D</title>
+<title>Huyền Thoại Hải Tặc</title>
 <style>
 body{
  margin:0;
- background:#001a33;
- color:white;
+ background:#4db8ff;
  font-family:Arial;
  overflow:hidden
 }
-#c{
- position:fixed;
- top:0;left:0;
- width:100%;
- height:100%
+#game{
+ width:100vw;
+ height:100vh;
+ background:linear-gradient(#87ceeb 0%,#4db8ff 40%,#1e90ff 60%,#ffe4a0 75%,#f4d58d 100%);
+ position:relative
 }
-#ui{
- position:fixed;
- top:0;left:0;
- width:100%;
- padding:10px
+#top{
+ display:flex;
+ justify-content:space-between;
+ padding:8px;
+ background:linear-gradient(#0008,#0000)
 }
-button{
- padding:10px;
- margin:4px;
- border:0;
- border-radius:8px;
- font-weight:bold
+.avatar{
+ display:flex;
+ align-items:center;
+ gap:6px;
+ background:#0006;
+ padding:4px 8px;
+ border-radius:10px;
+ border:2px solid gold
+}
+#gold,#gem{
+ background:#0007;
+ padding:4px 8px;
+ border-radius:12px;
+ border:1px solid #ff0
 }
 </style>
 </head>
 <body>
-  <canvas id="c"></canvas>
-<div id="ui">
- <h3>🏴‍☠️ ONE PIECE 50 ĐẢO</h3>
- <div>
-  <button onclick="quay('thuong')">
-   Quay Thường 🍺 100 vàng
-  </button>
-  <button onclick="quay('vip')">
-   Quay Xịn 🍻 10 KC
-  </button>
+<div id="game">
+<div id="top">
+  <div class="avatar">
+  <div style="width:40px;height:40px;background:orange;border-radius:8px;display:flex;align-items:center;justify-content:center">👒</div>
+  <div>
+   <div>BaoHoaiNTHB</div>
+   <small>Lv.50</small>
+  </div>
  </div>
- <div>
-  Vàng: <span id="gold">500</span>
-  KC: <span id="gem">50</span>
-  Đảo: <span id="island">1</span>/50
+ <div style="display:flex;gap:6px">
+  <div id="gold">💰 999</div>
+  <div id="gem">💎 1.51K</div>
  </div>
- <div id="team"></div>
- <div>
-  <button onclick="danhBoss()">
-   Đánh Boss ➡️
-  </button>
-  <button onclick="pvp()">
-   ⚔️ PvP Online
-  </button>
+ <div style="display:flex;gap:6px">
+  <div style="background:#0006;padding:6px;border-radius:8px">🎵</div>
+  <div style="background:#0006;padding:6px;border-radius:8px">👥</div>
+  <div style="background:#0006;padding:6px;border-radius:8px">✉️</div>
  </div>
 </div>
-<div id="log" style="position:fixed;bottom:20px;left:10px;background:#000a;padding:8px;border-radius:10px"></div>
-<script type="importmap">
-{
- "imports":{
-  "three":"https://unpkg.com/three@0.160.0/build/three.module.js"
- }
-}
-</script>
-<script type="module">
-import * as THREE from 'three';// DATA TƯỚNG
-const TUONG=[
- {id:'luffy',ten:'Luffy G5',hiem:'SSR',mau:0xff3300},
- {id:'zoro',ten:'Zoro',hiem:'SSR',mau:0x00ff88},
- {id:'shanks',ten:'Shanks',hiem:'SSR',mau:0xff0000},
- {id:'nami',ten:'Nami',hiem:'SR',mau:0xffaa00},
- {id:'sanji',ten:'Sanji',hiem:'SR',mau:0x0088ff},
- {id:'usopp',ten:'Usopp',hiem:'R',mau:0x88ff00}
-];
-let myTuong=[];
-let vang=500;
-let kimcuong=50;
-let dao=1;
-let chon=null;
 
-const scene=new THREE.Scene();
-scene.background=new THREE.Color(0x4db8ff);
-const camera=new THREE.PerspectiveCamera(
- 60,window.innerWidth/window.innerHeight,
- 0.1,100
-);
-camera.position.set(0,5,10);
-const renderer=new THREE.WebGLRenderer({
- canvas:document.getElementById('c'),
- antialias:true
-});
-renderer.setSize(window.innerWidth,window.innerHeight);
-scene.add(new THREE.AmbientLight(0xffffff,0.9));
-const group=new THREE.Group();
-scene.add(group);function tao3D(mau){
- group.clear();
- const body=new THREE.Mesh(
-  new THREE.CapsuleGeometry(0.5,1,4,8),
-  new THREE.MeshStandardMaterial({color:mau})
- );
- body.position.y=1;
- group.add(body);
+<div style="position:absolute;top:60px;left:0;width:100%;height:50%;display:flex;justify-content:center">
+ <div style="font-size:100px;margin-top:20px">🚢</div>
+ <div style="position:absolute;right:20%;top:10%;font-size:60px;opacity:0.7">⛵</div>
+</div><div style="position:absolute;right:8px;top:80px;display:flex;flex-direction:column;gap:8px">
+ <button style="background:#0006;color:white;padding:8px;border-radius:8px">👕<br><small>Tiệm đồ</small></button>
+ <button style="background:#0006;color:white;padding:8px;border-radius:8px">⭐<br><small>Luyện tướng</small></button>
+ <button style="background:#0006;color:white;padding:8px;border-radius:8px">🩸<br><small>Huyết tế</small></button>
+ <button style="background:#0006;color:white;padding:8px;border-radius:8px">⚔️<br><small>Phụ bản</small></button>
+</div>
+
+<div style="position:absolute;left:8px;top:150px;display:flex;flex-direction:column;gap:8px">
+ <button style="background:#0006;color:white;padding:8px;border-radius:8px">🏆<br><small>Thành tựu</small></button>
+ <button style="background:#0006;color:white;padding:8px;border-radius:8px">📜<br><small>Nhiệm vụ</small></button>
+</div>
+
+<div style="position:absolute;bottom:80px;width:100%;height:40px;background:#ffe4a0;display:flex;align-items:center;justify-content:center;color:#8b5a00">
+ 🏖️ Bãi biển Foosha - Đảo 1/50
+</div><div style="position:absolute;bottom:0;width:100%;background:linear-gradient(#8b5a2b,#5a3a1a);display:flex;justify-content:space-around;padding:8px 0;border-top:3px solid gold">
+ <button onclick="openShop()" style="background:none;color:white;border:0">
+  <div style="font-size:24px">🏪</div>
+  <small>Cửa hàng</small>
+ </button>
+ <button onclick="openGacha()" style="background:none;color:white;border:0">
+  <div style="font-size:24px">🍺</div>
+  <small>Chiêu mộ</small>
+ </button>
+ <button onclick="openTuong()" style="background:gold;color:black;border-radius:12px;padding:4px 12px">
+  <div style="font-size:24px">👥</div>
+  <small>Tướng</small>
+ </button>
+ <button style="background:none;color:white;border:0">
+  <div style="font-size:24px">🎒</div>
+  <small>Túi đồ</small>
+ </button>
+ <button onclick="nextDao()" style="background:none;color:white;border:0">
+  <div style="font-size:24px">🏴‍☠️</div>
+  <small>Thám hiểm</small>
+ </button>
+</div>
+</div>
+
+<div id="gachaModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000c;align-items:center;justify-content:center">
+ <div style="background:#112233;padding:20px;border-radius:16px;border:2px solid gold;text-align:center">
+  <h3>🍺 CHIÊU MỘ TƯỚNG</h3>
+  <p>Vàng: <span id="gGold">999</span> | KC: <span id="gGem">1510</span></p>
+  <button onclick="quay('thuong')" style="background:#ffcc00;padding:12px;border-radius:10px;margin:6px">Thùng Thường 🍺<br><small>100 vàng</small></button>
+  <button onclick="quay('vip')" style="background:#ff4444;color:white;padding:12px;border-radius:10px;margin:6px">Thùng Xịn 🍻<br><small>10 KC</small></button>
+  <div id="ketqua" style="margin:10px;font-weight:bold;color:gold"></div>
+  <button onclick="closeGacha()" style="background:#333;color:white">Đóng</button>
+ </div>
+</div><script>
+let vang=999, kc=1510, dao=1;
+let tuong=['Luffy'];
+const DS=[
+ {id:'luffy',ten:'Luffy G5',hiem:'SSR'},
+ {id:'zoro',ten:'Zoro',hiem:'SSR'},
+ {id:'shanks',ten:'Shanks',hiem:'SSR'},
+ {id:'nami',ten:'Nami',hiem:'SR'},
+ {id:'sanji',ten:'Sanji',hiem:'SR'}
+];
+function openGacha(){
+ document.getElementById('gachaModal').style.display='flex';
 }
-function capNhat(){
- document.getElementById('gold').innerText=vang;
- document.getElementById('gem').innerText=kimcuong;
- document.getElementById('island').innerText=dao;
- document.getElementById('team').innerHTML=
-  myTuong.map(id=>{
-   let t=TUONG.find(x=>x.id==id);
-   return `<button onclick="chonTuong('${t.id}')">${t.ten} [${t.hiem}]</button>`;
-  }).join(' ');
+function closeGacha(){
+ document.getElementById('gachaModal').style.display='none';
 }
-window.chonTuong=(id)=>{
- chon=TUONG.find(x=>x.id==id);
- tao3D(chon.mau);
- document.getElementById('log').innerText=
-  chon.ten+' - Skill: '+['Pistol','Haki','Ultimate'].join(' - ');
-};
-window.quay=(loai)=>{
- if(loai=='thuong'&&vang<100){
-  alert('Hết vàng!');return;
- }
- if(loai=='vip'&&kimcuong<10){
-  alert('Hết KC!');return;
- }
- if(loai=='thuong') vang-=100;
- else kimcuong-=10; let hiem='';
- if(loai=='vip'){
-  hiem=Math.random()<0.5?'SSR':'SR';
- }else{
-  let r=Math.random();
-  if(r<0.05) hiem='SSR';
-  else if(r<0.3) hiem='SR';
-  else hiem='R';
- }
- let pool=TUONG.filter(x=>x.hiem==hiem);
- if(pool.length==0) pool=TUONG;
+function quay(loai){
+ if(loai=='thuong'&&vang<100){alert('Hết vàng');return;}
+ if(loai=='vip'&&kc<10){alert('Hết KC');return;}
+ if(loai=='thuong') vang-=100; else kc-=10;
+ let hiem=loai=='vip'?(Math.random()<0.5?'SSR':'SR'):(Math.random()<0.05?'SSR':Math.random()<0.3?'SR':'R');
+ let pool=DS.filter(x=>x.hiem==hiem);
+ if(pool.length==0) pool=DS;
  let ra=pool[Math.floor(Math.random()*pool.length)];
- myTuong.push(ra.id);
- chonTuong(ra.id);
- capNhat();
- document.getElementById('log').innerText=
-  '🎉 Ra '+ra.ten+' ['+ra.hiem+'] '+(loai=='vip'?'🍻':'🍺');
-};
-window.danhBoss=()=>{
- if(!chon){alert('Chọn tướng!');return;}
- if(Math.random()>0.3){
-  dao=Math.min(50,dao+1);
-  vang+=100;
-  capNhat();
-  document.getElementById('log').innerText='Thắng Boss! Lên đảo '+dao;
- }else{
-  document.getElementById('log').innerText='Thua Boss đảo '+dao+' rồi!';
- }
-};
-window.pvp=()=>{
- let dich=TUONG[Math.floor(Math.random()*TUONG.length)];
- let thang=Math.random()>0.4;
- if(thang) vang+=50;
- capNhat();
- document.getElementById('log').innerText=
-  (thang?'Thắng ':'Thua ')+dich.ten+' ⚔️';
-};
-capNhat();
-tao3D(0xff3300);
-(function loop(){
- requestAnimationFrame(loop);
- group.rotation.y+=0.01;
- renderer.render(scene,camera);
-})();
+ tuong.push(ra.id);
+ document.getElementById('ketqua').innerText='🎉 Ra '+ra.ten+' ['+ra.hiem+'] '+(loai=='vip'?'🍻':'🍺');
+ document.getElementById('gGold').innerText=vang;
+ document.getElementById('gGem').innerText=kc;
+ document.getElementById('gold').innerText='💰 '+vang;
+ document.getElementById('gem').innerText='💎 '+kc;
+}
+function openTuong(){
+ alert('Đội hình: '+tuong.join(', ')+'\nĐảo: '+dao+'/50\nTướng SSR: Luffy G5, Zoro, Shanks có 3 skill riêng');
+}
+function openShop(){
+ alert('Cửa hàng: Mua thùng bia 🍺🍻, mua vàng, mua trang bị');
+}
+function nextDao(){
+ if(dao>=50){alert('Đã đến Laugh Tale!');return;}
+ dao++; alert('Đến đảo '+dao+' - Boss mạnh hơn!');
+}
 </script>
 </body>
 </html>
