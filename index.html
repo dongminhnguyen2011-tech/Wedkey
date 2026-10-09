@@ -1,1 +1,180 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>OP3D</title><style>body{margin:0;overflow:hidden;background:#001a33;color:#fff;font-family:Arial}#c{position:fixed;top:0;left:0;width:100%;height:100%}#u{position:fixed;top:0;left:0;width:100%}#t{background:#0008;padding:6px;display:flex;flex-wrap:wrap;gap:4px}button{padding:6px8px;border:0;border-radius:6px;font-weight:bold}#l{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:#000a;padding:6px 12px;border-radius:12px}</style><script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script></head><body><canvas id="c"></canvas><div id="u"><div id="t"></div></div><div id="l">One Piece 3D</div><script type="module">import*as T from'three';const CH=[{i:'luffy',n:'Luffy G5',r:'SSR',c:0xff3300},{i:'zoro',n:'Zoro',r:'SSR',c:0x00ff88},{i:'shanks',n:'Shanks',r:'SSR',c:0xf00},{i:'nami',n:'Nami',r:'SR',c:0xfa0},{i:'usopp',n:'Usopp',r:'R',c:0x8f0}];let my=[],g=500,d=50,sel=CH[0],cur=1;const sc=new T.Scene();sc.background=new T.Color(0x4db8ff);const cam=new T.PerspectiveCamera(60,innerWidth/innerHeight,0.1,100);cam.position.set(0,5,10);const ren=new T.WebGLRenderer({canvas:document.getElementById('c'),antialias:true});ren.setSize(innerWidth,innerHeight);sc.add(new T.AmbientLight(0xffffff,0.8));const gr=new T.Group();sc.add(gr);function sp(c){gr.clear();let m=new T.Mesh(new T.CapsuleGeometry(0.5,1,4,8),new T.MeshStandardMaterial({color:c.c}));m.position.y=1;gr.add(m);}function ui(){document.getElementById('t').innerHTML=`<button onclick="ga('n')">🍺${g}</button><button onclick="ga('v')">🍻${d}</button><button onclick="isl()">Đảo ${cur}/50</button><button onclick="pvp()">⚔️PvP</button>${my.map(x=>{let y=CH.find(z=>z.i==x);return`<button onclick="se('${y.i}')">${y.n}</button>`}).join('')}`;}window.ga=(t)=>{if(t=='n'&&g<100)return alert('het vang');if(t=='v'&&d<10)return alert('het kc');if(t=='n')g-=100;else d-=10;let h=t=='v'? (Math.random()<0.5?'SSR':'SR') : (Math.random()<0.05?'SSR':Math.random()<0.3?'SR':'R');let p=CH.filter(a=>a.r==h);if(!p.length)p=CH;let ch=p[Math.floor(Math.random()*p.length)];my.push(ch.i);sel=ch;sp(ch);ui();document.getElementById('l').innerText='Ra '+ch.n+' ['+ch.r+']';};window.se=(i)=>{sel=CH.find(a=>a.i==i);sp(sel);document.getElementById('l').innerText=sel.n;};window.isl=()=>{if(cur>=50)return alert('Win!');if(Math.random()>0.3){cur++;g+=100;ui();document.getElementById('l').innerText='Thang dao '+(cur-1)+'!';}else document.getElementById('l').innerText='Thua boss '+cur;};window.pvp=()=>{let e=CH[Math.floor(Math.random()*CH.length)];let w=Math.random()>0.4;document.getElementById('l').innerText=(w?'Thang ':'Thua ')+e.n;if(w)g+=50;ui();};ui();sp(sel);(function a(t){requestAnimationFrame(a);gr.rotation.y+=0.01;ren.render(sc,cam);})(0);</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>One Piece 3D</title>
+<style>
+body{
+ margin:0;
+ background:#001a33;
+ color:white;
+ font-family:Arial;
+ overflow:hidden
+}
+#c{
+ position:fixed;
+ top:0;left:0;
+ width:100%;
+ height:100%
+}
+#ui{
+ position:fixed;
+ top:0;left:0;
+ width:100%;
+ padding:10px
+}
+button{
+ padding:10px;
+ margin:4px;
+ border:0;
+ border-radius:8px;
+ font-weight:bold
+}
+</style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+<div id="ui">
+ <h3>🏴‍☠️ ONE PIECE 50 ĐẢO</h3>
+ <div>
+  <button onclick="quay('thuong')">
+   Quay Thường 🍺 100 vàng
+  </button>
+  <button onclick="quay('vip')">
+   Quay Xịn 🍻 10 KC
+  </button>
+ </div>
+ <div>
+  Vàng: <span id="gold">500</span>
+  KC: <span id="gem">50</span>
+  Đảo: <span id="island">1</span>/50
+ </div>
+ <div id="team"></div>
+ <div>
+  <button onclick="danhBoss()">
+   Đánh Boss ➡️
+  </button>
+  <button onclick="pvp()">
+   ⚔️ PvP Online
+  </button>
+ </div>
+</div>
+<div id="log" style="position:fixed;bottom:20px;left:10px;background:#000a;padding:8px;border-radius:10px"></div>
+<script type="importmap">
+{
+ "imports":{
+  "three":"https://unpkg.com/three@0.160.0/build/three.module.js"
+ }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';// DATA TƯỚNG
+const TUONG=[
+ {id:'luffy',ten:'Luffy G5',hiem:'SSR',mau:0xff3300},
+ {id:'zoro',ten:'Zoro',hiem:'SSR',mau:0x00ff88},
+ {id:'shanks',ten:'Shanks',hiem:'SSR',mau:0xff0000},
+ {id:'nami',ten:'Nami',hiem:'SR',mau:0xffaa00},
+ {id:'sanji',ten:'Sanji',hiem:'SR',mau:0x0088ff},
+ {id:'usopp',ten:'Usopp',hiem:'R',mau:0x88ff00}
+];
+let myTuong=[];
+let vang=500;
+let kimcuong=50;
+let dao=1;
+let chon=null;
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x4db8ff);
+const camera=new THREE.PerspectiveCamera(
+ 60,window.innerWidth/window.innerHeight,
+ 0.1,100
+);
+camera.position.set(0,5,10);
+const renderer=new THREE.WebGLRenderer({
+ canvas:document.getElementById('c'),
+ antialias:true
+});
+renderer.setSize(window.innerWidth,window.innerHeight);
+scene.add(new THREE.AmbientLight(0xffffff,0.9));
+const group=new THREE.Group();
+scene.add(group);function tao3D(mau){
+ group.clear();
+ const body=new THREE.Mesh(
+  new THREE.CapsuleGeometry(0.5,1,4,8),
+  new THREE.MeshStandardMaterial({color:mau})
+ );
+ body.position.y=1;
+ group.add(body);
+}
+function capNhat(){
+ document.getElementById('gold').innerText=vang;
+ document.getElementById('gem').innerText=kimcuong;
+ document.getElementById('island').innerText=dao;
+ document.getElementById('team').innerHTML=
+  myTuong.map(id=>{
+   let t=TUONG.find(x=>x.id==id);
+   return `<button onclick="chonTuong('${t.id}')">${t.ten} [${t.hiem}]</button>`;
+  }).join(' ');
+}
+window.chonTuong=(id)=>{
+ chon=TUONG.find(x=>x.id==id);
+ tao3D(chon.mau);
+ document.getElementById('log').innerText=
+  chon.ten+' - Skill: '+['Pistol','Haki','Ultimate'].join(' - ');
+};
+window.quay=(loai)=>{
+ if(loai=='thuong'&&vang<100){
+  alert('Hết vàng!');return;
+ }
+ if(loai=='vip'&&kimcuong<10){
+  alert('Hết KC!');return;
+ }
+ if(loai=='thuong') vang-=100;
+ else kimcuong-=10; let hiem='';
+ if(loai=='vip'){
+  hiem=Math.random()<0.5?'SSR':'SR';
+ }else{
+  let r=Math.random();
+  if(r<0.05) hiem='SSR';
+  else if(r<0.3) hiem='SR';
+  else hiem='R';
+ }
+ let pool=TUONG.filter(x=>x.hiem==hiem);
+ if(pool.length==0) pool=TUONG;
+ let ra=pool[Math.floor(Math.random()*pool.length)];
+ myTuong.push(ra.id);
+ chonTuong(ra.id);
+ capNhat();
+ document.getElementById('log').innerText=
+  '🎉 Ra '+ra.ten+' ['+ra.hiem+'] '+(loai=='vip'?'🍻':'🍺');
+};
+window.danhBoss=()=>{
+ if(!chon){alert('Chọn tướng!');return;}
+ if(Math.random()>0.3){
+  dao=Math.min(50,dao+1);
+  vang+=100;
+  capNhat();
+  document.getElementById('log').innerText='Thắng Boss! Lên đảo '+dao;
+ }else{
+  document.getElementById('log').innerText='Thua Boss đảo '+dao+' rồi!';
+ }
+};
+window.pvp=()=>{
+ let dich=TUONG[Math.floor(Math.random()*TUONG.length)];
+ let thang=Math.random()>0.4;
+ if(thang) vang+=50;
+ capNhat();
+ document.getElementById('log').innerText=
+  (thang?'Thắng ':'Thua ')+dich.ten+' ⚔️';
+};
+capNhat();
+tao3D(0xff3300);
+(function loop(){
+ requestAnimationFrame(loop);
+ group.rotation.y+=0.01;
+ renderer.render(scene,camera);
+})();
+</script>
+</body>
+</html>
