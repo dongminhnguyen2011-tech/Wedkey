@@ -3,155 +3,173 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title>Huyền Thoại Hải Tặc</title>
+<title>ThanDenAOV - Huyền Thoại Hải Tặc</title>
 <style>
 body{
  margin:0;
- background:#4db8ff;
- font-family:Arial;
- overflow:hidden
+ background:#0a1220;
+ color:#eee;
+ font-family:Arial
 }
-#game{
- width:100vw;
- height:100vh;
- background:linear-gradient(#87ceeb 0%,#4db8ff 40%,#1e90ff 60%,#ffe4a0 75%,#f4d58d 100%);
- position:relative
-}
-#top{
+#header{
+ background:linear-gradient(#1a2a4a,#0f1a30);
+ padding:10px;
  display:flex;
  justify-content:space-between;
- padding:8px;
- background:linear-gradient(#0008,#0000)
-}
-.avatar{
- display:flex;
  align-items:center;
- gap:6px;
- background:#0006;
- padding:4px 8px;
- border-radius:10px;
- border:2px solid gold
+ border-bottom:2px solid gold
 }
-#gold,#gem{
- background:#0007;
- padding:4px 8px;
+#logo{
+ font-weight:bold;
+ color:gold;
+ font-size:20px
+}
+#menu{
+ display:flex;
+ gap:8px;
+ background:#112233;
+ padding:8px;
+ overflow:auto
+}
+#menu button{
+ background:#1e3a5a;
+ color:white;
+ border:1px solid #0ff3;
+ padding:8px 12px;
+ border-radius:8px;
+ white-space:nowrap
+}
+#main{
+ display:flex;
+ flex-wrap:wrap;
+ gap:10px;
+ padding:10px
+}
+.box{
+ background:#152238;
+ border:1px solid #2a4a6a;
  border-radius:12px;
- border:1px solid #ff0
+ padding:10px;
+ flex:1;
+ min-width:280px
 }
 </style>
 </head>
 <body>
-<div id="game">
-<div id="top">
-  <div class="avatar">
-  <div style="width:40px;height:40px;background:orange;border-radius:8px;display:flex;align-items:center;justify-content:center">👒</div>
-  <div>
-   <div>BaoHoaiNTHB</div>
-   <small>Lv.50</small>
+<div id="header">
+ <div id="logo">⚓ ThanDenAOV.COM</div>
+ <div>
+  <button>🔍</button>
+  <button>👤 Đăng nhập</button>
+ </div>
+</div><div id="menu">
+ <button onclick="show('home')">🏠 Trang chủ</button>
+ <button onclick="show('tuong')">👥 Tướng</button>
+ <button onclick="show('chiêu')">🍺 Chiêu mộ</button>
+ <button onclick="show('dao')">🏝️ Đảo 1-50</button>
+ <button onclick="show('pvp')">⚔️ PvP Online</button>
+ <button onclick="show('shop')">🏪 Cửa hàng</button>
+ <button onclick="show('code')">🎁 Giftcode</button>
+</div>
+
+<div id="main">
+ <div class="box">
+  <h3>📢 Thông báo</h3>
+  <div style="background:#0006;padding:8px;border-radius:8px">
+   🔥 Server mới S50 vừa mở!<br>
+   🎁 Nhập code: TANDEN50 - Nhận 100 thùng bia 🍻<br>
+   ⚔️ Giải đấu PvP Liên Server tối nay 20h
   </div>
+  <h3 style="margin-top:12px">🏝️ Hành trình</h3>
+  <div id="daoList" style="display:flex;flex-wrap:wrap;gap:4px"></div>
  </div>
- <div style="display:flex;gap:6px">
-  <div id="gold">💰 999</div>
-  <div id="gem">💎 1.51K</div>
- </div>
- <div style="display:flex;gap:6px">
-  <div style="background:#0006;padding:6px;border-radius:8px">🎵</div>
-  <div style="background:#0006;padding:6px;border-radius:8px">👥</div>
-  <div style="background:#0006;padding:6px;border-radius:8px">✉️</div>
- </div>
-</div>
 
-<div style="position:absolute;top:60px;left:0;width:100%;height:50%;display:flex;justify-content:center">
- <div style="font-size:100px;margin-top:20px">🚢</div>
- <div style="position:absolute;right:20%;top:10%;font-size:60px;opacity:0.7">⛵</div>
-</div><div style="position:absolute;right:8px;top:80px;display:flex;flex-direction:column;gap:8px">
- <button style="background:#0006;color:white;padding:8px;border-radius:8px">👕<br><small>Tiệm đồ</small></button>
- <button style="background:#0006;color:white;padding:8px;border-radius:8px">⭐<br><small>Luyện tướng</small></button>
- <button style="background:#0006;color:white;padding:8px;border-radius:8px">🩸<br><small>Huyết tế</small></button>
- <button style="background:#0006;color:white;padding:8px;border-radius:8px">⚔️<br><small>Phụ bản</small></button>
-</div>
-
-<div style="position:absolute;left:8px;top:150px;display:flex;flex-direction:column;gap:8px">
- <button style="background:#0006;color:white;padding:8px;border-radius:8px">🏆<br><small>Thành tựu</small></button>
- <button style="background:#0006;color:white;padding:8px;border-radius:8px">📜<br><small>Nhiệm vụ</small></button>
-</div>
-
-<div style="position:absolute;bottom:80px;width:100%;height:40px;background:#ffe4a0;display:flex;align-items:center;justify-content:center;color:#8b5a00">
- 🏖️ Bãi biển Foosha - Đảo 1/50
-</div><div style="position:absolute;bottom:0;width:100%;background:linear-gradient(#8b5a2b,#5a3a1a);display:flex;justify-content:space-around;padding:8px 0;border-top:3px solid gold">
- <button onclick="openShop()" style="background:none;color:white;border:0">
-  <div style="font-size:24px">🏪</div>
-  <small>Cửa hàng</small>
- </button>
- <button onclick="openGacha()" style="background:none;color:white;border:0">
-  <div style="font-size:24px">🍺</div>
-  <small>Chiêu mộ</small>
- </button>
- <button onclick="openTuong()" style="background:gold;color:black;border-radius:12px;padding:4px 12px">
-  <div style="font-size:24px">👥</div>
-  <small>Tướng</small>
- </button>
- <button style="background:none;color:white;border:0">
-  <div style="font-size:24px">🎒</div>
-  <small>Túi đồ</small>
- </button>
- <button onclick="nextDao()" style="background:none;color:white;border:0">
-  <div style="font-size:24px">🏴‍☠️</div>
-  <small>Thám hiểm</small>
- </button>
-</div>
-</div>
-
-<div id="gachaModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000c;align-items:center;justify-content:center">
- <div style="background:#112233;padding:20px;border-radius:16px;border:2px solid gold;text-align:center">
-  <h3>🍺 CHIÊU MỘ TƯỚNG</h3>
-  <p>Vàng: <span id="gGold">999</span> | KC: <span id="gGem">1510</span></p>
-  <button onclick="quay('thuong')" style="background:#ffcc00;padding:12px;border-radius:10px;margin:6px">Thùng Thường 🍺<br><small>100 vàng</small></button>
-  <button onclick="quay('vip')" style="background:#ff4444;color:white;padding:12px;border-radius:10px;margin:6px">Thùng Xịn 🍻<br><small>10 KC</small></button>
-  <div id="ketqua" style="margin:10px;font-weight:bold;color:gold"></div>
-  <button onclick="closeGacha()" style="background:#333;color:white">Đóng</button>
+ <div class="box">
+  <h3>💬 Diễn đàn - Thảo luận</h3>
+  <div id="posts"></div>
+  <input id="newPost" placeholder="Viết bài thảo luận..." style="width:70%;padding:8px;border-radius:8px">
+  <button onclick="postBai()" style="padding:8px 12px;background:gold;border-radius:8px">Đăng</button>
+ </div> <div class="box">
+  <h3>🚢 Sảnh chờ - Bến cảng</h3>
+  <div style="background:linear-gradient(#4db8ff,#1e90ff 60%,#ffe4a0 80%);height:160px;border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative">
+   <div style="font-size:70px">🚢</div>
+   <div style="position:absolute;bottom:8px;left:8px;background:#0008;padding:4px 8px;border-radius:8px;font-size:12px">Thousand Sunny</div>
+   <div style="position:absolute;top:8px;right:8px;background:#0008;padding:4px 8px;border-radius:8px">Đảo: <span id="curDao">1</span>/50</div>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+   <button onclick="quay('thuong')" style="flex:1;background:#ffcc00;padding:10px;border-radius:10px">Quay 🍺<br><small>100 vàng</small></button>
+   <button onclick="quay('vip')" style="flex:1;background:#ff4444;color:white;padding:10px;border-radius:10px">Quay 🍻<br><small>10 KC</small></button>
+  </div>
+  <div id="doiHinh" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px"></div>
+  <div id="log" style="margin-top:8px;background:#0006;padding:6px;border-radius:8px;min-height:20px">Chào mừng thuyền trưởng!</div>
  </div>
 </div><script>
 let vang=999, kc=1510, dao=1;
-let tuong=['Luffy'];
-const DS=[
- {id:'luffy',ten:'Luffy G5',hiem:'SSR'},
- {id:'zoro',ten:'Zoro',hiem:'SSR'},
- {id:'shanks',ten:'Shanks',hiem:'SSR'},
- {id:'nami',ten:'Nami',hiem:'SR'},
- {id:'sanji',ten:'Sanji',hiem:'SR'}
+let my=['luffy'];
+const TUONG=[
+ {id:'luffy',ten:'Luffy G5',hiem:'SSR',skill:'Bajrang Gun'},
+ {id:'zoro',ten:'Zoro',hiem:'SSR',skill:'Asura'},
+ {id:'shanks',ten:'Shanks',hiem:'SSR',skill:'Divine Departure'},
+ {id:'nami',ten:'Nami',hiem:'SR',skill:'Zeus'},
+ {id:'sanji',ten:'Sanji',hiem:'SR',skill:'Ifrit'},
+ {id:'usopp',ten:'Usopp',hiem:'R',skill:'Green Star'}
 ];
-function openGacha(){
- document.getElementById('gachaModal').style.display='flex';
+let baidang=[
+ {user:'BaoHoaiNTHB',nd:'Vừa quay ra Shanks SSR từ thùng 🍻 xịn quá!',like:12},
+ {user:'ZoroFan',nd:'Ai chỉ cách qua đảo 25 với, boss khó quá',like:5},
+ {user:'Admin',nd:'Event x2 tỉ lệ SSR cuối tuần này nhé anh em',like:30}
+];
+
+function renderDao(){
+ let h='';
+ for(let i=1;i<=50;i++){
+  let cls=i==dao?'style="background:gold;color:black"':i<dao?'style="background:#0a3"':'style="background:#333;opacity:0.5"';
+  h+=`<div ${cls} style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:12px">${i}</div>`;
+ }
+ document.getElementById('daoList').innerHTML=h;
+ document.getElementById('curDao').innerText=dao;
 }
-function closeGacha(){
- document.getElementById('gachaModal').style.display='none';
+function renderPost(){
+ document.getElementById('posts').innerHTML=baidang.map(b=>`
+  <div style="background:#0f223a;padding:8px;margin:6px 0;border-radius:8px;border-left:3px solid gold">
+   <b>${b.user}</b> <small style="color:#aaa">• vừa xong</small><br>
+   ${b.nd}<br>
+   <small>❤️ ${b.like} 👍 💬</small>
+  </div>
+ `).join('');
 }
-function quay(loai){
+function renderDoi(){
+ document.getElementById('doiHinh').innerHTML=my.map(id=>{
+  let t=TUONG.find(x=>x.id==id);
+  return `<div style="background:#0006;padding:4px 6px;border-radius:6px;font-size:12px;border:1px solid ${t.hiem=='SSR'?'gold':'#0ff'}">${t.ten} [${t.hiem}]</div>`;
+ }).join('');
+}function quay(loai){
  if(loai=='thuong'&&vang<100){alert('Hết vàng');return;}
  if(loai=='vip'&&kc<10){alert('Hết KC');return;}
  if(loai=='thuong') vang-=100; else kc-=10;
  let hiem=loai=='vip'?(Math.random()<0.5?'SSR':'SR'):(Math.random()<0.05?'SSR':Math.random()<0.3?'SR':'R');
- let pool=DS.filter(x=>x.hiem==hiem);
- if(pool.length==0) pool=DS;
+ let pool=TUONG.filter(x=>x.hiem==hiem);
+ if(pool.length==0) pool=TUONG;
  let ra=pool[Math.floor(Math.random()*pool.length)];
- tuong.push(ra.id);
- document.getElementById('ketqua').innerText='🎉 Ra '+ra.ten+' ['+ra.hiem+'] '+(loai=='vip'?'🍻':'🍺');
- document.getElementById('gGold').innerText=vang;
- document.getElementById('gGem').innerText=kc;
- document.getElementById('gold').innerText='💰 '+vang;
- document.getElementById('gem').innerText='💎 '+kc;
+ my.push(ra.id);
+ renderDoi();
+ document.getElementById('log').innerText='🎉 Quay '+(loai=='vip'?'🍻':'🍺')+' ra '+ra.ten+' ['+ra.hiem+'] - Skill: '+ra.skill;
 }
-function openTuong(){
- alert('Đội hình: '+tuong.join(', ')+'\nĐảo: '+dao+'/50\nTướng SSR: Luffy G5, Zoro, Shanks có 3 skill riêng');
+function postBai(){
+ let v=document.getElementById('newPost').value;
+ if(!v) return;
+ baidang.unshift({user:'Bạn',nd:v,like:0});
+ document.getElementById('newPost').value='';
+ renderPost();
 }
-function openShop(){
- alert('Cửa hàng: Mua thùng bia 🍺🍻, mua vàng, mua trang bị');
+function show(tab){
+ if(tab=='home'){window.scrollTo(0,0);}
+ if(tab=='tuong'){alert('Đội hình: '+my.join(', ')+'\nMỗi tướng có 3 skill riêng, hiệu ứng 3D');}
+ if(tab=='chiêu'){alert('Bấm nút Quay 🍺 Thường 100 vàng, 🍻 Xịn 10 KC để ra tướng SSR');}
+ if(tab=='dao'){let d=prompt('Nhập đảo muốn đến 1-50',dao); if(d){dao=Math.min(50,parseInt(d)); renderDao();}}
+ if(tab=='pvp'){let e=TUONG[Math.floor(Math.random()*TUONG.length)]; alert('⚔️ PvP Online vs '+e.ten+' - '+(Math.random()>0.4?'Thắng!':'Thua!')); }
 }
-function nextDao(){
- if(dao>=50){alert('Đã đến Laugh Tale!');return;}
- dao++; alert('Đến đảo '+dao+' - Boss mạnh hơn!');
-}
+renderDao(); renderPost(); renderDoi();
 </script>
 </body>
 </html>
