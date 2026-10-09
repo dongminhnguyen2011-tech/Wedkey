@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedkey Game</title>
+<style>
+body{margin:0;background:#0d1117;color:white;text-align:center;font-family:sans-serif}
+canvas{background:#161b22;display:block;margin:20px auto;border:2px solid #58a6ff;border-radius:12px}
+</style>
+</head>
+<body>
+<h2>Wedkey - Cham de nhay</h2>
+<canvas id="c" width="360" height="500"></canvas>
+<p>Diem: <span id="s">0</span></p>
+<script>
+let cv=document.getElementById('c'),ctx=cv.getContext('2d');
+let p={x:50,y:400,w:30,h:30,vy:0},g=0.6,j=-12,sc=0,f=0,obs=[];
+function loop(){
+ f++; ctx.clearRect(0,0,360,500);
+ p.vy+=g; p.y+=p.vy; if(p.y>470){p.y=470; p.vy=0}
+ ctx.fillStyle='#58a6ff'; ctx.fillRect(p.x,p.y,p.w,p.h);
+ if(f%90==0) obs.push({x:360,y:420+Math.random()*50,w:25,h:80});
+ for(let o of obs){o.x-=4; ctx.fillStyle='#f85149'; ctx.fillRect(o.x,o.y,o.w,o.h);
+ if(p.x<o.x+o.w && p.x+p.w>o.x && p.y<o.y+o.h && p.y+p.h>o.y){alert('Thua! Diem: '+sc); location.reload()}}
+ obs=obs.filter(o=>o.x>-30); sc=Math.floor(f/10); document.getElementById('s').innerText=sc;
+ requestAnimationFrame(loop);
+}
+cv.addEventListener('touchstart',()=>{if(p.y>=469)p.vy=j});
+cv.addEventListener('mousedown',()=>{if(p.y>=469)p.vy=j});
+loop();
+</script>
+</body>
+</html>
